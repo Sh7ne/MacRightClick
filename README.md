@@ -10,7 +10,6 @@
 <p align="center">
   <a href="#features">Features</a> ·
   <a href="#install">Install</a> ·
-  <a href="#release-dmg">Release DMG</a> ·
   <a href="#privacy">Privacy</a>
 </p>
 
@@ -52,7 +51,7 @@ Finder already lets you hold **Option** in its contextual menu to reveal **Copy 
 
 ## Install
 
-Download the release DMG, open it, and drag **MacRightClick.app** into **Applications**.
+Download the [latest release DMG](https://github.com/Sh7ne/MacRightClick/releases/latest), open it, and drag **MacRightClick.app** into **Applications**.
 
 Then enable the Finder extension:
 
@@ -78,35 +77,6 @@ Convert AVI to MP4
 
 Conversion output is written next to the source file. Existing files are not overwritten; Mac RightClick adds a numeric suffix when needed.
 
-<p align="center">
-  <img src="./assets/readme/section-release.svg" width="100%" alt="Release as a simple DMG.">
-</p>
-
-## Release DMG
-
-A release DMG can be created from the Xcode project with Apple's built-in tools:
-
-```bash
-xcodebuild -project MacRightClick.xcodeproj \
-  -scheme MacRightClick \
-  -configuration Release \
-  -derivedDataPath /private/tmp/MacRightClickReleaseDerived \
-  build
-
-hdiutil create \
-  -volname "Mac RightClick" \
-  -srcfolder /private/tmp/MacRightClickDMGRoot \
-  -ov \
-  -format UDZO \
-  dist/MacRightClick.dmg
-```
-
-The current packaged artifact is expected at:
-
-```text
-dist/MacRightClick.dmg
-```
-
 ## Privacy
 
 Mac RightClick is intentionally boring about data:
@@ -116,31 +86,6 @@ Mac RightClick is intentionally boring about data:
 - It does not request notification permission.
 - It only acts on files the user selected in Finder.
 - macOS may ask for file access the first time output is written into protected folders such as Downloads, Desktop, Documents, or Movies.
-
-## Development
-
-Generate the Xcode project if needed:
-
-```bash
-xcodegen generate
-```
-
-Build locally:
-
-```bash
-xcodebuild -project MacRightClick.xcodeproj \
-  -scheme MacRightClick \
-  -configuration Debug \
-  -derivedDataPath /private/tmp/MacRightClickDebugDerived \
-  build
-```
-
-Useful verification commands:
-
-```bash
-codesign --verify --deep --strict --verbose=2 /Applications/MacRightClick.app
-pluginkit -m -A -D -vvv -p com.apple.FinderSync | grep MacRightClick
-```
 
 ## Notes
 

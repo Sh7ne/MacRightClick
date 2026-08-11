@@ -10,7 +10,6 @@
 <p align="center">
   <a href="#功能">功能</a> ·
   <a href="#安装">安装</a> ·
-  <a href="#release-dmg">Release DMG</a> ·
   <a href="#隐私">隐私</a>
 </p>
 
@@ -52,7 +51,7 @@
 
 ## 安装
 
-下载 Release DMG，打开后将 **MacRightClick.app** 拖入 **Applications**。
+从 [GitHub Releases](https://github.com/Sh7ne/MacRightClick/releases/latest) 下载最新 DMG，打开后将 **MacRightClick.app** 拖入 **Applications**。
 
 然后启用 Finder 扩展：
 
@@ -78,35 +77,6 @@ Convert AVI to MP4
 
 转换结果会写入源文件旁。已有文件不会被覆盖；需要时 Mac RightClick 会自动附加数字后缀。
 
-<p align="center">
-  <img src="./assets/readme/section-release.svg" width="100%" alt="以简单 DMG 形式发布。">
-</p>
-
-## Release DMG
-
-可以使用 Xcode 项目和 Apple 自带工具创建发布 DMG：
-
-```bash
-xcodebuild -project MacRightClick.xcodeproj \
-  -scheme MacRightClick \
-  -configuration Release \
-  -derivedDataPath /private/tmp/MacRightClickReleaseDerived \
-  build
-
-hdiutil create \
-  -volname "Mac RightClick" \
-  -srcfolder /private/tmp/MacRightClickDMGRoot \
-  -ov \
-  -format UDZO \
-  dist/MacRightClick.dmg
-```
-
-当前打包产物位于：
-
-```text
-dist/MacRightClick.dmg
-```
-
 ## 隐私
 
 Mac RightClick 对数据的态度很简单：
@@ -116,31 +86,6 @@ Mac RightClick 对数据的态度很简单：
 - 不会请求通知权限。
 - 只会处理用户在 Finder 中选中的文件。
 - 第一次向“下载”“桌面”“文稿”或“影片”等受保护目录写入文件时，macOS 可能请求文件访问权限。
-
-## 开发
-
-需要时生成 Xcode 项目：
-
-```bash
-xcodegen generate
-```
-
-本地构建：
-
-```bash
-xcodebuild -project MacRightClick.xcodeproj \
-  -scheme MacRightClick \
-  -configuration Debug \
-  -derivedDataPath /private/tmp/MacRightClickDebugDerived \
-  build
-```
-
-常用验证命令：
-
-```bash
-codesign --verify --deep --strict --verbose=2 /Applications/MacRightClick.app
-pluginkit -m -A -D -vvv -p com.apple.FinderSync | grep MacRightClick
-```
 
 ## 说明
 
