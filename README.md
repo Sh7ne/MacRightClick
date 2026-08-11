@@ -3,6 +3,11 @@
 </p>
 
 <p align="center">
+  <strong>English</strong> ·
+  <a href="./README.zh-CN.md">简体中文</a>
+</p>
+
+<p align="center">
   <a href="#features">Features</a> ·
   <a href="#install">Install</a> ·
   <a href="#release-dmg">Release DMG</a> ·
@@ -17,6 +22,10 @@
 </p>
 
 **Mac RightClick** is a tiny native macOS utility that adds focused actions to Finder's right-click menu. It keeps everyday file operations where they belong: directly beside the file, with no Shortcuts, no Automator workflow, and no cloud service in the middle.
+
+## Why Copy Path?
+
+Finder already lets you hold **Option** in its contextual menu to reveal **Copy as Pathname**. That works, but I do not want to press Option either. This operation is so simple it deserves a one-handed flow from start to finish: select the file, right-click it, choose **Copy Path**.
 
 <p align="center">
   <img src="./assets/readme/workflow.svg" width="100%" alt="Select a file, right click it in Finder, run a native conversion, and receive the output beside the source file.">
