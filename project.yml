@@ -1,0 +1,46 @@
+name: MacRightClick
+options:
+  minimumXcodeGenVersion: 2.42.0
+  deploymentTarget:
+    macOS: "14.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    CODE_SIGN_STYLE: Automatic
+    CODE_SIGN_IDENTITY: Apple Development
+    DEVELOPMENT_TEAM: AMHB5QVH4B
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+targets:
+  MacRightClick:
+    type: application
+    platform: macOS
+    sources:
+      - App/Sources
+      - App/Assets.xcassets
+    dependencies:
+      - target: MacRightClickFinderExtension
+        embed: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: local.finder.MacRightClick
+        INFOPLIST_FILE: App/Info.plist
+        ENABLE_APP_SANDBOX: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+  MacRightClickFinderExtension:
+    type: app-extension
+    platform: macOS
+    sources:
+      - Extension/Sources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: local.finder.MacRightClick.FinderExtension
+        INFOPLIST_FILE: Extension/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Extension/MacRightClickFinderExtension.entitlements
+        ENABLE_APP_SANDBOX: YES
+        APPLICATION_EXTENSION_API_ONLY: YES
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../../../../Frameworks @executable_path/../Frameworks @loader_path/../Frameworks"
+schemes:
+  MacRightClick:
+    build:
+      targets:
+        MacRightClick: all

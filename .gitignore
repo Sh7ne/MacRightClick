@@ -1,0 +1,19 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+*.xcscmblueprint
+
+# macOS
+.DS_Store
+*.swp
+
+# Local release artifacts
+dist/
+*.dmg
+
+# Logs
+*.log
+
+# Xcode user settings
+xcuserdata/

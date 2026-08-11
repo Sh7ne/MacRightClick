@@ -1,0 +1,53 @@
+<svg width="1280" height="520" viewBox="0 0 1280 520" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Mac RightClick hero</title>
+  <desc id="desc">A native macOS Finder right click menu for copying paths and converting PDF or AVI files locally.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1280" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08111F"/>
+      <stop offset="0.52" stop-color="#102842"/>
+      <stop offset="1" stop-color="#0F382D"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#4CC9F0"/>
+      <stop offset="1" stop-color="#2F80ED"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#7CFFCB"/>
+      <stop offset="1" stop-color="#2AD88F"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+  <rect width="1280" height="520" rx="34" fill="url(#bg)"/>
+  <path d="M0 410C150 360 265 455 416 402C570 348 646 234 817 269C995 306 1094 401 1280 340V520H0V410Z" fill="#132F48" opacity="0.72"/>
+  <path d="M82 108H470" stroke="#7CFFCB" stroke-opacity="0.5" stroke-width="2"/>
+  <text x="82" y="162" fill="#F8FBFF" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="72" font-weight="800">Mac RightClick</text>
+  <text x="86" y="211" fill="#BFE8FF" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="25" font-weight="600">Native Finder actions for files you already selected.</text>
+  <text x="86" y="252" fill="#DDEAF4" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="20">Copy paths, render PDFs to JPG, and convert AVI clips to MP4 without Shortcuts, Automator, cloud uploads, or background scanners.</text>
+  <g transform="translate(86 314)">
+    <rect width="154" height="44" rx="22" fill="url(#blue)"/>
+    <text x="24" y="29" fill="white" font-family="Inter, ui-sans-serif, system-ui" font-size="16" font-weight="700">Finder Sync</text>
+    <rect x="170" width="132" height="44" rx="22" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-opacity="0.22"/>
+    <text x="194" y="29" fill="#E8F4FF" font-family="Inter, ui-sans-serif, system-ui" font-size="16" font-weight="700">PDFKit</text>
+    <rect x="318" width="172" height="44" rx="22" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-opacity="0.22"/>
+    <text x="342" y="29" fill="#E8F4FF" font-family="Inter, ui-sans-serif, system-ui" font-size="16" font-weight="700">AVFoundation</text>
+  </g>
+  <g transform="translate(760 74)" filter="url(#shadow)">
+    <rect width="382" height="382" rx="30" fill="#F5F7FA"/>
+    <rect x="28" y="30" width="326" height="44" rx="12" fill="#DEE6F1"/>
+    <circle cx="54" cy="52" r="8" fill="#FF5F57"/>
+    <circle cx="80" cy="52" r="8" fill="#FFBD2E"/>
+    <circle cx="106" cy="52" r="8" fill="#28C840"/>
+    <rect x="42" y="104" width="298" height="218" rx="18" fill="#111827"/>
+    <rect x="64" y="129" width="250" height="30" rx="9" fill="#273244"/>
+    <rect x="64" y="174" width="250" height="30" rx="9" fill="#273244"/>
+    <rect x="64" y="219" width="250" height="30" rx="9" fill="url(#green)"/>
+    <rect x="64" y="264" width="250" height="30" rx="9" fill="#273244"/>
+    <text x="86" y="150" fill="#E5EDF7" font-family="Inter, ui-sans-serif, system-ui" font-size="15" font-weight="700">Copy Path</text>
+    <text x="86" y="195" fill="#E5EDF7" font-family="Inter, ui-sans-serif, system-ui" font-size="15" font-weight="700">Convert PDF to JPG</text>
+    <text x="86" y="240" fill="#042114" font-family="Inter, ui-sans-serif, system-ui" font-size="15" font-weight="800">Convert AVI to MP4</text>
+    <text x="86" y="285" fill="#E5EDF7" font-family="Inter, ui-sans-serif, system-ui" font-size="15" font-weight="700">Reveal in Finder</text>
+    <path d="M280 229l18 12-18 12v-24Z" fill="#08351F"/>
+  </g>
+</svg>
