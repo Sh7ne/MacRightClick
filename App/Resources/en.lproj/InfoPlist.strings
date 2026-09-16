@@ -1,0 +1,5 @@
+"NSDesktopFolderUsageDescription" = "Mac RightClick needs access to the Desktop folder to create converted files next to the selected source file.";
+"NSDocumentsFolderUsageDescription" = "Mac RightClick needs access to the Documents folder to create converted files next to the selected source file.";
+"NSDownloadsFolderUsageDescription" = "Mac RightClick needs access to the Downloads folder to create converted files next to the selected source file.";
+"NSMoviesFolderUsageDescription" = "Mac RightClick needs access to the Movies folder to create converted files next to the selected source file.";
+"NSPicturesFolderUsageDescription" = "Mac RightClick needs access to the Pictures folder to import selected media into an iOS Simulator.";

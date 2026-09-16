@@ -21,9 +21,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var didReceiveInput = false
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        let argumentURLs = CommandLine.arguments.dropFirst().map { URL(fileURLWithPath: $0) }
-        AppLogger.write("Launched with arguments: \(CommandLine.arguments.dropFirst().joined(separator: " | "))")
-        guard !argumentURLs.isEmpty else {
+        let arguments = Array(CommandLine.arguments.dropFirst())
+        AppLogger.write("Launched with arguments: \(arguments.joined(separator: " | "))")
+        guard !arguments.isEmpty else {
             AppLogger.write("No file arguments received.")
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 if !self.didReceiveInput {
@@ -33,13 +33,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             }
             return
         }
-        startConversion(urls: argumentURLs)
+        handleOpenURLs(arguments.map(inputURL(from:)))
     }
 
     func application(_ application: NSApplication, open urls: [URL]) {
         AppLogger.write("Opened URLs: \(urls.map(\.absoluteString).joined(separator: " | "))")
+        handleOpenURLs(urls)
+    }
+
+    private func inputURL(from argument: String) -> URL {
+        if let commandURL = URL(string: argument), commandURL.scheme == "macrightclick" {
+            return commandURL
+        }
+
+        return URL(fileURLWithPath: argument)
+    }
+
+    private func handleOpenURLs(_ urls: [URL]) {
         var pdfURLs: [URL] = []
         var aviURLs: [URL] = []
+        var simulatorMediaURLs: [URL] = []
         var fileURLs: [URL] = []
 
         for url in urls {
@@ -49,16 +62,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                     pdfURLs.append(contentsOf: command.urls)
                 case .avi:
                     aviURLs.append(contentsOf: command.urls)
+                case .simulatorMedia:
+                    simulatorMediaURLs.append(contentsOf: command.urls)
                 }
             } else {
                 fileURLs.append(url)
             }
         }
 
-        if pdfURLs.isEmpty, aviURLs.isEmpty {
+        if !fileURLs.isEmpty {
             startConversion(urls: fileURLs)
-        } else {
+        }
+
+        if !pdfURLs.isEmpty || !aviURLs.isEmpty {
             startConversion(pdfURLs: pdfURLs, aviURLs: aviURLs)
+        }
+
+        if !simulatorMediaURLs.isEmpty {
+            startSimulatorMediaImport(urls: simulatorMediaURLs)
         }
     }
 
@@ -73,6 +94,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         didReceiveInput = true
         Task { @MainActor [weak self] in
             await self?.convert(pdfURLs: pdfURLs, aviURLs: aviURLs)
+        }
+    }
+
+    private func startSimulatorMediaImport(urls: [URL]) {
+        didReceiveInput = true
+        Task { @MainActor [weak self] in
+            await self?.importMediaIntoSimulator(urls: urls)
         }
     }
 
@@ -112,6 +140,119 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.terminate(nil)
     }
 
+    @MainActor
+    private func importMediaIntoSimulator(urls: [URL]) async {
+        let accessedURLs = urls.filter { $0.startAccessingSecurityScopedResource() }
+        defer {
+            accessedURLs.forEach { $0.stopAccessingSecurityScopedResource() }
+        }
+
+        AppLogger.write("Simulator media URLs: \(urls.map(\.path).joined(separator: " | "))")
+
+        do {
+            let devices = try await SimulatorMediaImporter.availableDevices()
+            let bootedDevices = devices.filter(\.isBooted)
+            let targetDevice: IOSSimulatorDevice
+
+            if bootedDevices.count == 1 {
+                targetDevice = bootedDevices[0]
+                AppLogger.write("Using the only booted simulator: \(targetDevice.name) [\(targetDevice.udid)]")
+            } else {
+                guard let selectedDevice = chooseSimulator(from: devices, bootedCount: bootedDevices.count, mediaCount: urls.count) else {
+                    AppLogger.write("Simulator media import cancelled by user.")
+                    NSApp.terminate(nil)
+                    return
+                }
+                targetDevice = selectedDevice
+                AppLogger.write("User selected simulator: \(targetDevice.name) [\(targetDevice.udid)]")
+            }
+
+            let didBoot = try await SimulatorMediaImporter.bootIfNeeded(targetDevice)
+            try await SimulatorMediaImporter.addMedia(urls, to: targetDevice)
+
+            let action = AppStrings.value(
+                didBoot ? "simulator.import.action.booted_and_imported" : "simulator.import.action.imported",
+                fallback: didBoot ? "Started and imported" : "Imported"
+            )
+            let message = AppStrings.format(
+                "simulator.import.success.message",
+                fallback: "%@ %@ media item(s) to %@ (%@).",
+                action,
+                "\(urls.count)",
+                targetDevice.name,
+                targetDevice.runtimeVersion
+            )
+            AppLogger.write("\(message) UUID: \(targetDevice.udid)")
+            presentAlert(
+                title: AppStrings.value("simulator.import.success.title", fallback: "Import Complete"),
+                message: message,
+                style: .informational
+            )
+        } catch {
+            let message = userFacingMessage(for: error)
+            AppLogger.write("Simulator media import failed: \(message)")
+            presentAlert(
+                title: AppStrings.value("simulator.import.failure.title", fallback: "Import Failed"),
+                message: message,
+                style: .warning
+            )
+        }
+
+        NSApp.terminate(nil)
+    }
+
+    @MainActor
+    private func chooseSimulator(
+        from devices: [IOSSimulatorDevice],
+        bootedCount: Int,
+        mediaCount: Int
+    ) -> IOSSimulatorDevice? {
+        let alert = NSAlert()
+        let noBootedDevice = bootedCount == 0
+        alert.messageText = AppStrings.value(
+            noBootedDevice ? "simulator.choose.boot.title" : "simulator.choose.import.title",
+            fallback: noBootedDevice ? "Select an iOS Simulator to Start" : "Select Import Destination"
+        )
+        alert.informativeText = noBootedDevice
+            ? AppStrings.format(
+                "simulator.choose.boot.message",
+                fallback: "No iOS Simulators are running. The selected device will be started before importing %@ media item(s).",
+                "\(mediaCount)"
+            )
+            : AppStrings.format(
+                "simulator.choose.import.message",
+                fallback: "Multiple iOS Simulators are running. Select the device that should receive %@ media item(s).",
+                "\(mediaCount)"
+            )
+        alert.addButton(withTitle: AppStrings.value("simulator.button.import", fallback: "Import"))
+        alert.addButton(withTitle: AppStrings.value("simulator.button.cancel", fallback: "Cancel"))
+
+        let picker = NSPopUpButton(frame: NSRect(x: 0, y: 0, width: 480, height: 26), pullsDown: false)
+        picker.addItems(withTitles: devices.map(\.selectionTitle))
+        picker.selectItem(at: 0)
+        alert.accessoryView = picker
+
+        NSApp.activate(ignoringOtherApps: true)
+        guard alert.runModal() == .alertFirstButtonReturn else {
+            return nil
+        }
+
+        let selectedIndex = picker.indexOfSelectedItem
+        guard devices.indices.contains(selectedIndex) else { return nil }
+        return devices[selectedIndex]
+    }
+
+    @MainActor
+    private func presentAlert(title: String, message: String, style: NSAlert.Style) {
+        let alert = NSAlert()
+        alert.messageText = title
+        alert.informativeText = message
+        alert.alertStyle = style
+        alert.addButton(withTitle: AppStrings.value("simulator.button.ok", fallback: "OK"))
+        NSApp.activate(ignoringOtherApps: true)
+        alert.runModal()
+    }
+
     private func userFacingMessage(for error: Error) -> String {
         let nsError = error as NSError
         if nsError.domain == NSCocoaErrorDomain || nsError.domain == NSPOSIXErrorDomain {
@@ -119,7 +260,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 nsError.code == NSFileReadNoPermissionError ||
                 nsError.code == Int(EACCES) ||
                 nsError.code == Int(EPERM) {
-                return "Permission denied. Allow Mac RightClick in System Settings > Privacy & Security > Files and Folders."
+                return AppStrings.value(
+                    "simulator.error.permission_denied",
+                    fallback: "Permission denied. Allow Mac RightClick in System Settings > Privacy & Security > Files and Folders."
+                )
             }
         }
 
@@ -150,6 +294,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 private enum CommandKind {
     case pdf
     case avi
+    case simulatorMedia
 
     init?(host: String?) {
         switch host {
@@ -157,6 +302,8 @@ private enum CommandKind {
             self = .pdf
         case "convert-avi":
             self = .avi
+        case "add-to-ios-simulator":
+            self = .simulatorMedia
         default:
             return nil
         }
@@ -179,6 +326,16 @@ enum AppLogger {
                 try? data.write(to: url, options: .atomic)
             }
         }
+    }
+}
+
+enum AppStrings {
+    static func value(_ key: String, fallback: String) -> String {
+        NSLocalizedString(key, tableName: "Localizable", bundle: .main, value: fallback, comment: "")
+    }
+
+    static func format(_ key: String, fallback: String, _ arguments: CVarArg...) -> String {
+        String(format: value(key, fallback: fallback), locale: .current, arguments: arguments)
     }
 }
 

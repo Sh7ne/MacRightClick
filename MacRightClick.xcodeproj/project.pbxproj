@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D098AD074563EAD106B9C13 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FE560BFE22D536BC6876158 /* InfoPlist.strings */; };
 		27CDCF1FB2FE9C388DC11688 /* MacRightClickFinderExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 00D81D23155C33DB1BFFCDF6 /* MacRightClickFinderExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		36EFF5D579FB71E0F0759C61 /* SimulatorMediaImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC61C8FBF50DAB2E0A32136 /* SimulatorMediaImporter.swift */; };
 		4D9F5152EB9904DA62130DC1 /* MacRightClickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A64733BBFEBE6EF97BF9956 /* MacRightClickApp.swift */; };
 		9031093FC28FD22CD8985F5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9025C80A70D6228E084EF113 /* Assets.xcassets */; };
 		A5DDE1921084BABFD159ED00 /* FinderSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716FDA70FB242E75A69EB2D8 /* FinderSync.swift */; };
+		F1CA6560253FABD07B1A6D40 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FDD13BE08E9E2FA80D340B8B /* Localizable.strings */; };
+		F575D43B20E79C06DE1F6E9A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 10B54F93BC4642D075D5ECC3 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,10 +43,17 @@
 
 /* Begin PBXFileReference section */
 		00D81D23155C33DB1BFFCDF6 /* MacRightClickFinderExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MacRightClickFinderExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		28DA0657473ED8988CED1D78 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2A64733BBFEBE6EF97BF9956 /* MacRightClickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacRightClickApp.swift; sourceTree = "<group>"; };
+		4E5FF9A587DBA99E0F4687FA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		716FDA70FB242E75A69EB2D8 /* FinderSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderSync.swift; sourceTree = "<group>"; };
 		9025C80A70D6228E084EF113 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9BC61C8FBF50DAB2E0A32136 /* SimulatorMediaImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulatorMediaImporter.swift; sourceTree = "<group>"; };
+		B104A31B300E117CB496905F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C1DB9807289470FCD747EA25 /* MacRightClick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacRightClick.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD7A4F26AF435C0D469CED9C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D00212E57DD802B9B7C3929B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		F38528CC90223ED571DF2D68 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -59,9 +70,19 @@
 			isa = PBXGroup;
 			children = (
 				2A64733BBFEBE6EF97BF9956 /* MacRightClickApp.swift */,
+				9BC61C8FBF50DAB2E0A32136 /* SimulatorMediaImporter.swift */,
 			);
 			name = Sources;
 			path = App/Sources;
+			sourceTree = "<group>";
+		};
+		1C1A2E34E29610EF06C18916 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FDD13BE08E9E2FA80D340B8B /* Localizable.strings */,
+			);
+			name = Resources;
+			path = Extension/Resources;
 			sourceTree = "<group>";
 		};
 		25772BA8EA93C6AB0369611A /* App */ = {
@@ -85,10 +106,22 @@
 			isa = PBXGroup;
 			children = (
 				25772BA8EA93C6AB0369611A /* App */,
+				E70FB36BD65C9E76CE4257C4 /* Resources */,
+				1C1A2E34E29610EF06C18916 /* Resources */,
 				1B27CB9ADE133E2B06033DAB /* Sources */,
 				B6814F48AFDC33549892596C /* Sources */,
 				187F0A32F7DA507F5784CAAA /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		E70FB36BD65C9E76CE4257C4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0FE560BFE22D536BC6876158 /* InfoPlist.strings */,
+				10B54F93BC4642D075D5ECC3 /* Localizable.strings */,
+			);
+			name = Resources;
+			path = App/Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -99,6 +132,7 @@
 			buildConfigurationList = F35833F874127431C4F7FE7F /* Build configuration list for PBXNativeTarget "MacRightClickFinderExtension" */;
 			buildPhases = (
 				F292E9E0651D66F3D37D6A6F /* Sources */,
+				CF4AFA66138F103EB62C6531 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -156,6 +190,7 @@
 			knownRegions = (
 				Base,
 				en,
+				"zh-Hans",
 			);
 			mainGroup = E39ED21A8C4C6FB6F71B3F30;
 			minimizedProjectReferenceProxies = 1;
@@ -176,6 +211,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				9031093FC28FD22CD8985F5A /* Assets.xcassets in Resources */,
+				0D098AD074563EAD106B9C13 /* InfoPlist.strings in Resources */,
+				F575D43B20E79C06DE1F6E9A /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF4AFA66138F103EB62C6531 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1CA6560253FABD07B1A6D40 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D9F5152EB9904DA62130DC1 /* MacRightClickApp.swift in Sources */,
+				36EFF5D579FB71E0F0759C61 /* SimulatorMediaImporter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,6 +253,36 @@
 			targetProxy = CED616AEF936C731E6326A52 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0FE560BFE22D536BC6876158 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4E5FF9A587DBA99E0F4687FA /* en */,
+				D00212E57DD802B9B7C3929B /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		10B54F93BC4642D075D5ECC3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				28DA0657473ED8988CED1D78 /* en */,
+				B104A31B300E117CB496905F /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		FDD13BE08E9E2FA80D340B8B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F38528CC90223ED571DF2D68 /* en */,
+				CD7A4F26AF435C0D469CED9C /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		0C629211A26B15A3CC2E5184 /* Debug */ = {

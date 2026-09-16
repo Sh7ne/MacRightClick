@@ -1,0 +1,24 @@
+"simulator.status.running" = "Running";
+"simulator.status.shutdown" = "Shut Down";
+
+"simulator.import.action.imported" = "Imported";
+"simulator.import.action.booted_and_imported" = "Started and imported";
+"simulator.import.success.message" = "%@ %@ media item(s) to %@ (%@).";
+"simulator.import.success.title" = "Import Complete";
+"simulator.import.failure.title" = "Import Failed";
+
+"simulator.choose.boot.title" = "Select an iOS Simulator to Start";
+"simulator.choose.import.title" = "Select Import Destination";
+"simulator.choose.boot.message" = "No iOS Simulators are running. The selected device will be started before importing %@ media item(s).";
+"simulator.choose.import.message" = "Multiple iOS Simulators are running. Select the device that should receive %@ media item(s).";
+
+"simulator.button.import" = "Import";
+"simulator.button.cancel" = "Cancel";
+"simulator.button.ok" = "OK";
+
+"simulator.error.permission_denied" = "Permission denied. Allow Mac RightClick in System Settings > Privacy & Security > Files and Folders.";
+"simulator.error.no_available_devices" = "No available iOS Simulators were found. Install an iOS Simulator runtime in Xcode.";
+"simulator.error.no_media" = "There are no media files to import.";
+"simulator.error.invalid_media_path" = "The media file could not be found: %@";
+"simulator.error.invalid_device_list" = "Unable to read the iOS Simulator device list: %@";
+"simulator.error.command_failed" = "Command failed: %@\n\n%@";

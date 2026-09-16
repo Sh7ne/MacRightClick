@@ -71,5 +71,7 @@
 	<string>Mac RightClick needs access to the Documents folder to create converted files next to the selected source file.</string>
 	<key>NSMoviesFolderUsageDescription</key>
 	<string>Mac RightClick needs access to the Movies folder to create converted files next to the selected source file.</string>
+	<key>NSPicturesFolderUsageDescription</key>
+	<string>Mac RightClick needs access to the Pictures folder to import selected media into an iOS Simulator.</string>
 </dict>
 </plist>

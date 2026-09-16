@@ -1,5 +1,6 @@
 import AppKit
 import FinderSync
+import UniformTypeIdentifiers
 
 final class FinderSync: FIFinderSync {
     private var lastSelectedURLs: [URL] = []
@@ -23,7 +24,7 @@ final class FinderSync: FIFinderSync {
         let menu = NSMenu(title: "")
 
         let copyItem = NSMenuItem(
-            title: "Copy Path",
+            title: localized("finder.menu.copy_path", value: "Copy Path"),
             action: #selector(copySelectedPaths(_:)),
             keyEquivalent: ""
         )
@@ -33,7 +34,7 @@ final class FinderSync: FIFinderSync {
 
         if allPDFs(urls) {
             let convertItem = NSMenuItem(
-                title: "Convert PDF to JPG",
+                title: localized("finder.menu.convert_pdf_to_jpg", value: "Convert PDF to JPG"),
                 action: #selector(convertSelectedPDFs(_:)),
                 keyEquivalent: ""
             )
@@ -44,13 +45,24 @@ final class FinderSync: FIFinderSync {
 
         if allAVIs(urls) {
             let convertItem = NSMenuItem(
-                title: "Convert AVI to MP4",
+                title: localized("finder.menu.convert_avi_to_mp4", value: "Convert AVI to MP4"),
                 action: #selector(convertSelectedAVIs(_:)),
                 keyEquivalent: ""
             )
             convertItem.target = self
             convertItem.image = MenuIcon.convertVideo()
             menu.addItem(convertItem)
+        }
+
+        if allSimulatorMedia(urls) {
+            let simulatorItem = NSMenuItem(
+                title: localized("finder.menu.add_to_ios_simulator", value: "Add to iOS Simulator"),
+                action: #selector(addSelectedMediaToSimulator(_:)),
+                keyEquivalent: ""
+            )
+            simulatorItem.target = self
+            simulatorItem.image = MenuIcon.addToSimulator()
+            menu.addItem(simulatorItem)
         }
 
         return menu
@@ -70,7 +82,7 @@ final class FinderSync: FIFinderSync {
         let pdfURLs = currentSelectedURLs()
         guard !pdfURLs.isEmpty, allPDFs(pdfURLs) else { return }
 
-        guard let commandURL = convertCommandURL(for: pdfURLs) else {
+        guard let commandURL = commandURL(for: pdfURLs) else {
             Logger.write("Could not create conversion command.")
             return
         }
@@ -84,7 +96,7 @@ final class FinderSync: FIFinderSync {
         let aviURLs = currentSelectedURLs()
         guard !aviURLs.isEmpty, allAVIs(aviURLs) else { return }
 
-        guard let commandURL = convertCommandURL(for: aviURLs, host: "convert-avi") else {
+        guard let commandURL = commandURL(for: aviURLs, host: "convert-avi") else {
             Logger.write("Could not create AVI conversion command.")
             return
         }
@@ -94,12 +106,30 @@ final class FinderSync: FIFinderSync {
         }
     }
 
-    private func convertCommandURL(for urls: [URL], host: String = "convert") -> URL? {
+    @objc private func addSelectedMediaToSimulator(_ sender: Any?) {
+        let mediaURLs = currentSelectedURLs()
+        guard !mediaURLs.isEmpty, allSimulatorMedia(mediaURLs) else { return }
+
+        guard let commandURL = commandURL(for: mediaURLs, host: "add-to-ios-simulator") else {
+            Logger.write("Could not create iOS Simulator import command.")
+            return
+        }
+
+        if !NSWorkspace.shared.open(commandURL) {
+            Logger.write("Could not start iOS Simulator media import.")
+        }
+    }
+
+    private func commandURL(for urls: [URL], host: String = "convert") -> URL? {
         var components = URLComponents()
         components.scheme = "macrightclick"
         components.host = host
         components.queryItems = urls.map { URLQueryItem(name: "path", value: $0.path) }
         return components.url
+    }
+
+    private func localized(_ key: String, value: String) -> String {
+        NSLocalizedString(key, tableName: "Localizable", bundle: .main, value: value, comment: "")
     }
 
     private func selectedItemURLs() -> [URL] {
@@ -127,6 +157,22 @@ final class FinderSync: FIFinderSync {
 
     private func allAVIs(_ urls: [URL]) -> Bool {
         !urls.isEmpty && urls.allSatisfy { $0.pathExtension.lowercased() == "avi" }
+    }
+
+    private func allSimulatorMedia(_ urls: [URL]) -> Bool {
+        !urls.isEmpty && urls.allSatisfy(isSimulatorMedia)
+    }
+
+    private func isSimulatorMedia(_ url: URL) -> Bool {
+        guard url.isFileURL else { return false }
+
+        let resourceValues = try? url.resourceValues(forKeys: [.contentTypeKey])
+        let contentType = resourceValues?.contentType ?? UTType(filenameExtension: url.pathExtension)
+        guard let contentType else { return false }
+
+        return contentType.conforms(to: .image) ||
+            contentType.conforms(to: .movie) ||
+            contentType.conforms(to: .video)
     }
 
 }
@@ -199,6 +245,26 @@ enum MenuIcon {
             play.close()
             color.setFill()
             play.fill()
+        }
+    }
+
+    static func addToSimulator() -> NSImage {
+        make { rect, color in
+            color.setStroke()
+
+            let deviceRect = NSRect(x: 3.5, y: 2.5, width: 8, height: 13)
+            let device = NSBezierPath(roundedRect: deviceRect, xRadius: 1.8, yRadius: 1.8)
+            device.lineWidth = 1.7
+            device.stroke()
+
+            let plus = NSBezierPath()
+            plus.lineWidth = 1.8
+            plus.lineCapStyle = .round
+            plus.move(to: NSPoint(x: 14.5, y: 9))
+            plus.line(to: NSPoint(x: 17, y: 9))
+            plus.move(to: NSPoint(x: 15.75, y: 7.75))
+            plus.line(to: NSPoint(x: 15.75, y: 10.25))
+            plus.stroke()
         }
     }
 

@@ -1,0 +1,24 @@
+"simulator.status.running" = "运行中";
+"simulator.status.shutdown" = "已关机";
+
+"simulator.import.action.imported" = "已导入";
+"simulator.import.action.booted_and_imported" = "已启动并导入";
+"simulator.import.success.message" = "%@ %@ 个媒体文件到 %@（%@）。";
+"simulator.import.success.title" = "导入完成";
+"simulator.import.failure.title" = "导入失败";
+
+"simulator.choose.boot.title" = "选择要启动的 iOS 模拟器";
+"simulator.choose.import.title" = "选择导入目标";
+"simulator.choose.boot.message" = "未检测到正在运行的 iOS 模拟器。选定设备会启动后导入 %@ 个媒体文件。";
+"simulator.choose.import.message" = "检测到多台正在运行的 iOS 模拟器。请选择要导入 %@ 个媒体文件的设备。";
+
+"simulator.button.import" = "导入";
+"simulator.button.cancel" = "取消";
+"simulator.button.ok" = "好";
+
+"simulator.error.permission_denied" = "权限被拒绝。请在“系统设置”>“隐私与安全性”>“文件与文件夹”中允许 Mac RightClick 访问。";
+"simulator.error.no_available_devices" = "未找到可用的 iOS 模拟器。请先在 Xcode 中安装 iOS Simulator runtime。";
+"simulator.error.no_media" = "没有可导入的媒体文件。";
+"simulator.error.invalid_media_path" = "找不到媒体文件：%@";
+"simulator.error.invalid_device_list" = "无法读取 iOS 模拟器列表：%@";
+"simulator.error.command_failed" = "命令失败：%@\n\n%@";

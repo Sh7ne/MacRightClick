@@ -1,0 +1,5 @@
+"NSDesktopFolderUsageDescription" = "Mac RightClick 需要访问桌面文件夹，以便在所选文件旁创建转换后的文件。";
+"NSDocumentsFolderUsageDescription" = "Mac RightClick 需要访问文稿文件夹，以便在所选文件旁创建转换后的文件。";
+"NSDownloadsFolderUsageDescription" = "Mac RightClick 需要访问下载文件夹，以便在所选文件旁创建转换后的文件。";
+"NSMoviesFolderUsageDescription" = "Mac RightClick 需要访问影片文件夹，以便在所选文件旁创建转换后的文件。";
+"NSPicturesFolderUsageDescription" = "Mac RightClick 需要访问图片文件夹，以便将所选媒体导入 iOS 模拟器。";
