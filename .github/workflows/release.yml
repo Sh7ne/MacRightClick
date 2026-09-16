@@ -25,8 +25,33 @@ jobs:
             -scheme MacRightClick \
             -configuration Release \
             -derivedDataPath "$RUNNER_TEMP/MacRightClickDerivedData" \
+            ARCHS="arm64 x86_64" \
+            ONLY_ACTIVE_ARCH=NO \
             CODE_SIGNING_ALLOWED=NO \
             build
+
+      - name: Validate and ad-hoc sign app
+        run: |
+          set -euo pipefail
+
+          app_path="$RUNNER_TEMP/MacRightClickDerivedData/Build/Products/Release/MacRightClick.app"
+          extension_path="$app_path/Contents/PlugIns/MacRightClickFinderExtension.appex"
+          version="${GITHUB_REF_NAME#v}"
+
+          for bundle in "$app_path" "$extension_path"; do
+            test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$bundle/Contents/Info.plist")" = "$version"
+          done
+
+          # Ad-hoc signing keeps the nested bundles consistent; it is not Developer ID notarization.
+          codesign --force --sign - \
+            --entitlements Extension/MacRightClickFinderExtension.entitlements \
+            "$extension_path"
+          codesign --force --sign - "$app_path"
+          codesign --verify --deep --strict --verbose=2 "$app_path"
+          for arch in arm64 x86_64; do
+            lipo -verify_arch "$arch" "$app_path/Contents/MacOS/MacRightClick"
+            lipo -verify_arch "$arch" "$extension_path/Contents/MacOS/MacRightClickFinderExtension"
+          done
 
       - name: Create DMG
         run: |
@@ -46,10 +71,25 @@ jobs:
             -format UDZO \
             "$dmg_path"
 
+          hdiutil verify "$dmg_path"
+          cd "$RUNNER_TEMP"
+          shasum -a 256 MacRightClick.dmg > MacRightClick.dmg.sha256
+
       - name: Publish GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" "$RUNNER_TEMP/MacRightClick.dmg#MacRightClick.dmg" \
+          set -euo pipefail
+
+          notes_path=".github/release-notes/$GITHUB_REF_NAME.md"
+          notes_args=(--generate-notes)
+          if [[ -f "$notes_path" ]]; then
+            notes_args=(--notes-file "$notes_path")
+          fi
+
+          gh release create "$GITHUB_REF_NAME" \
+            "$RUNNER_TEMP/MacRightClick.dmg#MacRightClick.dmg" \
+            "$RUNNER_TEMP/MacRightClick.dmg.sha256#SHA-256 checksum" \
             --title "Mac RightClick $GITHUB_REF_NAME" \
-            --generate-notes
+            --verify-tag \
+            "${notes_args[@]}"

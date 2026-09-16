@@ -42,7 +42,7 @@
 
 **需要安装 Xcode**、iOS Simulator runtime，并至少有一台可用的 iOS 模拟器。当前开发者目录需要指向 Xcode，而不是只有 Command Line Tools。可导入的媒体格式以 Apple 的 `simctl addmedia` 支持范围为准，本操作不会转码。复制路径和文件转换功能不依赖 Xcode。
 
-> 此功能已在 `main` 分支实现，尚未包含在已发布的 `v1.0.0` DMG 中。详见[版本记录](#版本记录)。
+> 此功能已包含在 [v1.1.0](https://github.com/Sh7ne/MacRightClick/releases/tag/v1.1.0) 及后续版本中。详见[版本记录](#版本记录)。
 
 ## 为什么有 Copy Path？
 
@@ -77,7 +77,7 @@
 
 从 [GitHub Releases](https://github.com/Sh7ne/MacRightClick/releases/latest) 下载最新 DMG，打开后将 **MacRightClick.app** 拖入 **Applications**。
 
-目前已发布的 DMG 为 `v1.0.0`。下文介绍的模拟器导入、本地化和图标更新已在 `main` 分支，等待下一个版本发布。
+请使用 **v1.1.0 或更高版本**，以获得模拟器导入、本地化菜单及新图标。
 
 然后启用 Finder 扩展：
 
@@ -118,14 +118,14 @@ Mac RightClick 对数据的态度很简单：
 
 ## 版本记录
 
-### 未发布 · main
+### [v1.1.0](https://github.com/Sh7ne/MacRightClick/releases/tag/v1.1.0) · 2026-09-16
 
 - **添加到 iOS 模拟器：** 从 Finder 导入所选图片和视频到模拟器照片图库。支持单台运行设备一键导入、多设备选择、自动启动、明确 UUID、多选文件及成功或失败反馈。
 - **本地化：** 菜单和模拟器对话框跟随系统语言，支持英文和简体中文。
 - **macOS 27：** 更新为 Xcode 27 构建，并在 macOS 27 上验证，最低系统版本保持 macOS 14+。
 - **App 图标：** 更新设计，提供浅色背景及以中性黑色为主的深色外观。
 
-[查看 v1.0.0 以来的变更](https://github.com/Sh7ne/MacRightClick/compare/v1.0.0...main)
+[查看 v1.0.0 以来的变更](https://github.com/Sh7ne/MacRightClick/compare/v1.0.0...v1.1.0)
 
 ### [v1.0.0](https://github.com/Sh7ne/MacRightClick/releases/tag/v1.0.0) · 2026-08-11
 

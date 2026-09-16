@@ -42,7 +42,7 @@ Test a photo picker, video editor, or media workflow with your own files. Select
 
 **Requires Xcode**, an installed iOS Simulator runtime, and at least one available iOS simulator. Your active developer directory must point to Xcode, not only Command Line Tools. Media compatibility follows Apple's `simctl addmedia`; this action imports files without transcoding them. Xcode is not required for Copy Path or the conversion actions.
 
-> Available on `main`; not included in the published `v1.0.0` DMG. See the [changelog](#changelog).
+> Available in [v1.1.0](https://github.com/Sh7ne/MacRightClick/releases/tag/v1.1.0) and later. See the [changelog](#changelog).
 
 ## Why Copy Path?
 
@@ -77,7 +77,7 @@ Finder already lets you hold **Option** in its contextual menu to reveal **Copy 
 
 Download the [latest release DMG](https://github.com/Sh7ne/MacRightClick/releases/latest), open it, and drag **MacRightClick.app** into **Applications**.
 
-The published DMG is currently `v1.0.0`. The simulator import, localization, and icon updates described below are on `main` and await the next release.
+Use **v1.1.0 or later** for simulator import, localized menus, and the updated app icon.
 
 Then enable the Finder extension:
 
@@ -118,14 +118,14 @@ Mac RightClick is intentionally boring about data:
 
 ## Changelog
 
-### Unreleased · main
+### [v1.1.0](https://github.com/Sh7ne/MacRightClick/releases/tag/v1.1.0) · 2026-09-16
 
 - **Add to iOS Simulator:** import selected photos and videos from Finder into Simulator Photos. Includes one-click import to a single running device, a device chooser, automatic boot, explicit UUID targeting, multi-file support, and success or failure feedback.
 - **Localization:** English and Simplified Chinese menus and simulator dialogs follow the system language.
 - **macOS 27:** updated for Xcode 27 and verified on macOS 27, retaining the macOS 14+ deployment target.
 - **App icon:** refreshed design with a light background and a neutral, predominantly black dark appearance.
 
-[Changes since v1.0.0](https://github.com/Sh7ne/MacRightClick/compare/v1.0.0...main)
+[Changes since v1.0.0](https://github.com/Sh7ne/MacRightClick/compare/v1.0.0...v1.1.0)
 
 ### [v1.0.0](https://github.com/Sh7ne/MacRightClick/releases/tag/v1.0.0) · 2026-08-11
 
