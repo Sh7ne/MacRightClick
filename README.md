@@ -15,6 +15,7 @@
 
 <p align="center">
   <img alt="macOS" src="https://img.shields.io/badge/macOS-14%2B-111827?labelColor=0F172A">
+  <img alt="macOS 27 tested" src="https://img.shields.io/badge/macOS-27-tested-2AD88F?labelColor=111827">
   <img alt="Swift" src="https://img.shields.io/badge/Swift-5-F05138?labelColor=111827">
   <img alt="Finder Sync" src="https://img.shields.io/badge/Finder-Sync-2F80ED?labelColor=111827">
   <img alt="Local only" src="https://img.shields.io/badge/Local-only-2AD88F?labelColor=111827">
@@ -90,3 +91,5 @@ Mac RightClick is intentionally boring about data:
 ## Notes
 
 Finder Sync extensions are managed by macOS. If a newly installed build does not appear immediately, relaunch Finder and confirm the extension is enabled in System Settings.
+
+Mac RightClick is built with Xcode 27 and verified on macOS 27 while retaining its macOS 14+ deployment target.

@@ -15,6 +15,7 @@
 
 <p align="center">
   <img alt="macOS" src="https://img.shields.io/badge/macOS-14%2B-111827?labelColor=0F172A">
+  <img alt="macOS 27 tested" src="https://img.shields.io/badge/macOS-27-tested-2AD88F?labelColor=111827">
   <img alt="Swift" src="https://img.shields.io/badge/Swift-5-F05138?labelColor=111827">
   <img alt="Finder Sync" src="https://img.shields.io/badge/Finder-Sync-2F80ED?labelColor=111827">
   <img alt="Local only" src="https://img.shields.io/badge/Local-only-2AD88F?labelColor=111827">
@@ -90,3 +91,5 @@ Mac RightClick 对数据的态度很简单：
 ## 说明
 
 Finder Sync 扩展由 macOS 管理。新安装的版本没有立即出现时，请重新启动 Finder，并确认扩展已在系统设置中启用。
+
+Mac RightClick 使用 Xcode 27 构建，并已在 macOS 27 上验证；最低系统版本仍保持 macOS 14+。

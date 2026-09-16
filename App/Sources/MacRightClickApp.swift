@@ -33,7 +33,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             }
             return
         }
-        convert(urls: argumentURLs)
+        startConversion(urls: argumentURLs)
     }
 
     func application(_ application: NSApplication, open urls: [URL]) {
@@ -56,21 +56,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         if pdfURLs.isEmpty, aviURLs.isEmpty {
-            convert(urls: fileURLs)
+            startConversion(urls: fileURLs)
         } else {
-            convert(pdfURLs: pdfURLs, aviURLs: aviURLs)
+            startConversion(pdfURLs: pdfURLs, aviURLs: aviURLs)
         }
     }
 
-    private func convert(urls: [URL]) {
-        convert(
+    private func startConversion(urls: [URL]) {
+        startConversion(
             pdfURLs: urls.filter { $0.pathExtension.lowercased() == "pdf" },
             aviURLs: urls.filter { $0.pathExtension.lowercased() == "avi" }
         )
     }
 
-    private func convert(pdfURLs: [URL], aviURLs: [URL]) {
+    private func startConversion(pdfURLs: [URL], aviURLs: [URL]) {
         didReceiveInput = true
+        Task { @MainActor [weak self] in
+            await self?.convert(pdfURLs: pdfURLs, aviURLs: aviURLs)
+        }
+    }
+
+    @MainActor
+    private func convert(pdfURLs: [URL], aviURLs: [URL]) async {
         AppLogger.write("PDF URLs: \(pdfURLs.map(\.path).joined(separator: " | "))")
         AppLogger.write("AVI URLs: \(aviURLs.map(\.path).joined(separator: " | "))")
 
@@ -86,7 +93,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
             for url in aviURLs {
                 AppLogger.write("Converting AVI: \(url.path)")
-                let outputURL = try AVIMP4Converter.convert(aviURL: url)
+                let outputURL = try await AVIMP4Converter.convert(aviURL: url)
                 AppLogger.write("Created MP4: \(outputURL.path)")
             }
 
@@ -165,7 +172,7 @@ enum AppLogger {
         if let data = line.data(using: .utf8) {
             if FileManager.default.fileExists(atPath: url.path),
                let handle = try? FileHandle(forWritingTo: url) {
-                try? handle.seekToEnd()
+                _ = try? handle.seekToEnd()
                 try? handle.write(contentsOf: data)
                 try? handle.close()
             } else {
@@ -267,7 +274,7 @@ enum PDFJPGConverter {
 }
 
 enum AVIMP4Converter {
-    static func convert(aviURL: URL) throws -> URL {
+    static func convert(aviURL: URL) async throws -> URL {
         let didAccess = aviURL.startAccessingSecurityScopedResource()
         defer {
             if didAccess {
@@ -283,7 +290,7 @@ enum AVIMP4Converter {
         )
 
         do {
-            try exportWithAVFoundation(asset: asset, inputName: aviURL.lastPathComponent, outputURL: outputURL)
+            try await exportWithAVFoundation(asset: asset, inputName: aviURL.lastPathComponent, outputURL: outputURL)
             return outputURL
         } catch {
             if FileManager.default.fileExists(atPath: outputURL.path) {
@@ -295,44 +302,37 @@ enum AVIMP4Converter {
         }
     }
 
-    private static func exportWithAVFoundation(asset: AVURLAsset, inputName: String, outputURL: URL) throws {
-        let compatiblePresets = AVAssetExportSession.exportPresets(compatibleWith: asset)
+    private static func exportWithAVFoundation(asset: AVURLAsset, inputName: String, outputURL: URL) async throws {
         let candidatePresets = [
             AVAssetExportPresetPassthrough,
             AVAssetExportPresetHighestQuality,
             AVAssetExportPreset1920x1080,
             AVAssetExportPreset1280x720
-        ].filter { compatiblePresets.contains($0) }
+        ]
+        var lastError: Error?
 
-        let exportSession = candidatePresets
-            .compactMap { AVAssetExportSession(asset: asset, presetName: $0) }
-            .first { $0.supportedFileTypes.contains(.mp4) }
+        for preset in candidatePresets {
+            guard let exportSession = AVAssetExportSession(asset: asset, presetName: preset) else {
+                continue
+            }
 
-        guard let exportSession else {
-            throw ConversionError.mp4Unsupported(inputName)
-        }
+            do {
+                try await exportSession.export(to: outputURL, as: .mp4)
+                return
+            } catch {
+                lastError = error
+            }
 
-        exportSession.outputURL = outputURL
-        exportSession.outputFileType = .mp4
-        exportSession.shouldOptimizeForNetworkUse = true
-
-        let semaphore = DispatchSemaphore(value: 0)
-        exportSession.exportAsynchronously {
-            semaphore.signal()
-        }
-        semaphore.wait()
-
-        switch exportSession.status {
-        case .completed:
-            return
-        default:
             if FileManager.default.fileExists(atPath: outputURL.path) {
                 try? FileManager.default.removeItem(at: outputURL)
             }
-            throw ConversionError.videoExportFailed(
-                exportSession.error?.localizedDescription ?? "Unknown AVFoundation export error."
-            )
         }
+
+        if let lastError {
+            throw ConversionError.videoExportFailed(lastError.localizedDescription)
+        }
+
+        throw ConversionError.mp4Unsupported(inputName)
     }
 }
 

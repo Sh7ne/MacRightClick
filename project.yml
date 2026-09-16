@@ -1,6 +1,7 @@
 name: MacRightClick
 options:
   minimumXcodeGenVersion: 2.42.0
+  xcodeVersion: "27.0"
   deploymentTarget:
     macOS: "14.0"
 settings:
