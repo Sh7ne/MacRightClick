@@ -1,6 +1,6 @@
 <svg width="1280" height="520" viewBox="0 0 1280 520" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Mac RightClick hero</title>
-  <desc id="desc">A native macOS Finder right click menu for copying paths and converting PDF or AVI files locally.</desc>
+  <desc id="desc">Native Finder actions: import photos and videos into iOS Simulator, copy paths, and convert PDF or AVI files locally. Illustrative menu; available actions depend on the selection.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1280" y2="520" gradientUnits="userSpaceOnUse">
       <stop stop-color="#08111F"/>
@@ -23,9 +23,9 @@
   <path d="M0 410C150 360 265 455 416 402C570 348 646 234 817 269C995 306 1094 401 1280 340V520H0V410Z" fill="#132F48" opacity="0.72"/>
   <path d="M82 108H470" stroke="#7CFFCB" stroke-opacity="0.5" stroke-width="2"/>
   <text x="82" y="162" fill="#F8FBFF" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="72" font-weight="800">Mac RightClick</text>
-  <text x="86" y="211" fill="#BFE8FF" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="25" font-weight="600">Native Finder actions for files you already selected.</text>
-  <text x="86" y="252" fill="#DDEAF4" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="18">Copy paths, render PDFs to JPG, and convert AVI clips to MP4.</text>
-  <text x="86" y="282" fill="#DDEAF4" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="18">No Shortcuts, Automator, cloud uploads, or background scanners.</text>
+  <text x="86" y="211" fill="#BFE8FF" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="25" font-weight="600">Your test media. One right-click from Simulator.</text>
+  <text x="86" y="252" fill="#DDEAF4" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="18">Send photos and videos straight to the iOS Simulator library.</text>
+  <text x="86" y="282" fill="#DDEAF4" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="18">Plus Copy Path, PDF to JPG, and AVI to MP4. All local.</text>
   <g transform="translate(86 314)">
     <rect width="154" height="44" rx="22" fill="url(#blue)"/>
     <text x="24" y="29" fill="white" font-family="Inter, ui-sans-serif, system-ui" font-size="16" font-weight="700">Finder Sync</text>
@@ -43,12 +43,11 @@
     <rect x="42" y="104" width="298" height="218" rx="18" fill="#111827"/>
     <rect x="64" y="129" width="250" height="30" rx="9" fill="#273244"/>
     <rect x="64" y="174" width="250" height="30" rx="9" fill="#273244"/>
-    <rect x="64" y="219" width="250" height="30" rx="9" fill="url(#green)"/>
-    <rect x="64" y="264" width="250" height="30" rx="9" fill="#273244"/>
+    <rect x="64" y="219" width="250" height="30" rx="9" fill="#273244"/>
+    <rect x="64" y="264" width="250" height="30" rx="9" fill="url(#green)"/>
     <text x="86" y="150" fill="#E5EDF7" font-family="Inter, ui-sans-serif, system-ui" font-size="15" font-weight="700">Copy Path</text>
     <text x="86" y="195" fill="#E5EDF7" font-family="Inter, ui-sans-serif, system-ui" font-size="15" font-weight="700">Convert PDF to JPG</text>
-    <text x="86" y="240" fill="#042114" font-family="Inter, ui-sans-serif, system-ui" font-size="15" font-weight="800">Convert AVI to MP4</text>
-    <text x="86" y="285" fill="#E5EDF7" font-family="Inter, ui-sans-serif, system-ui" font-size="15" font-weight="700">Reveal in Finder</text>
-    <path d="M280 229l18 12-18 12v-24Z" fill="#08351F"/>
+    <text x="86" y="240" fill="#E5EDF7" font-family="Inter, ui-sans-serif, system-ui" font-size="15" font-weight="700">Convert AVI to MP4</text>
+    <text x="86" y="285" fill="#042114" font-family="Inter, ui-sans-serif, system-ui" font-size="15" font-weight="800">Add to iOS Simulator</text>
   </g>
 </svg>
