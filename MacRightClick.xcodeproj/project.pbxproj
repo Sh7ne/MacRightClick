@@ -15,6 +15,7 @@
 		A5DDE1921084BABFD159ED00 /* FinderSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716FDA70FB242E75A69EB2D8 /* FinderSync.swift */; };
 		F1CA6560253FABD07B1A6D40 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FDD13BE08E9E2FA80D340B8B /* Localizable.strings */; };
 		F575D43B20E79C06DE1F6E9A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 10B54F93BC4642D075D5ECC3 /* Localizable.strings */; };
+		F5DDBF1E42D8CDFCA4F7E710 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 1AD19C42727C661D08E58A88 /* AppIcon.icon */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		00D81D23155C33DB1BFFCDF6 /* MacRightClickFinderExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MacRightClickFinderExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		1AD19C42727C661D08E58A88 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		28DA0657473ED8988CED1D78 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2A64733BBFEBE6EF97BF9956 /* MacRightClickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacRightClickApp.swift; sourceTree = "<group>"; };
 		4E5FF9A587DBA99E0F4687FA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 		25772BA8EA93C6AB0369611A /* App */ = {
 			isa = PBXGroup;
 			children = (
+				1AD19C42727C661D08E58A88 /* AppIcon.icon */,
 				9025C80A70D6228E084EF113 /* Assets.xcassets */,
 			);
 			path = App;
@@ -210,6 +213,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5DDBF1E42D8CDFCA4F7E710 /* AppIcon.icon in Resources */,
 				9031093FC28FD22CD8985F5A /* Assets.xcassets in Resources */,
 				0D098AD074563EAD106B9C13 /* InfoPlist.strings in Resources */,
 				F575D43B20E79C06DE1F6E9A /* Localizable.strings in Resources */,

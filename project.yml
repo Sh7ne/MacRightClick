@@ -18,6 +18,7 @@ targets:
     sources:
       - App/Sources
       - App/Assets.xcassets
+      - App/AppIcon.icon
       - App/Resources
     dependencies:
       - target: MacRightClickFinderExtension
